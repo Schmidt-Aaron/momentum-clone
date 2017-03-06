@@ -2,6 +2,11 @@
 <head>
 
 	<meta charset="UTF-8">
+
+	<!-- code for client authentication via google-->
+	<meta name="google-signin-client_id" content="876041411929-0hug7nvp73appd3f1srpih5c0eboaq86.apps.googleusercontent.com">
+	<!-- end authentication code -->
+
   	<title>Momentum Clone</title>
   	<link rel="stylesheet" href="css/style.css">
 
@@ -13,6 +18,15 @@
 	<script src='js/googlesearch.js'></script>
 	<gcse:search></gcse:search> 
 	<!-- end google search code -->
+
+
+
+	<!-- google user account authentication -->
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+	<a href="#" onclick="signOut();">Sign out</a>
+	<!-- end authentication code -->
 
 
 	<script src='js/index.js'></script>
