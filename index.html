@@ -22,10 +22,18 @@
 	
 	<!-- weather widget -->
 	<div id="weather"> INSERT <br />weather?</div>
+
+	<!-- daily quote -->
+	<div id="quote"></div>
+
+	<!-- daily greeting -->
+	<div id="greeting"></div>
 	
 	<!-- required for google search -->
 	<script src='js/googlesearch.js'></script>
-	<gcse:search></gcse:search> 
+	<div id='search'>
+		<gcse:search></gcse:search> 
+	</div>
 	<!-- end google search code -->
 
 
@@ -34,7 +42,7 @@
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	<div class="g-signin2" data-onsuccess="onSignIn"></div>
 
-	<a href="#" onclick="signOut();">Sign out</a>
+	<a class='g-signout' href="#" onclick="signOut();">Sign out</a>
 	<!-- end authentication code -->
 
 
