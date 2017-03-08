@@ -19,3 +19,40 @@ function signOut() {
 }
 
 // end google authentication code
+
+
+//begin pretty backgrounds
+//temp picture url. will look into better pics and/or resolution images later
+//note not firing function just yet -- incomplete
+
+function getPic(){
+	var src = "https://source.unsplash.com/category/nature/1600x900/daily"
+	document.getElementById('bkgd').style.backgroundImage = url(src);
+}
+
+//end pretty backgrounds
+
+//start clock function
+//test date.toLocalTimeString implementation 
+
+(function() {
+
+	function adjTime(i) {
+		return (i < 10) ? "0" + i : i;
+	}
+
+	function getTime(){
+		var today = new Date();
+		var h = adjTime(today.getHours());
+		var m = adjTime(today.getMinutes());
+		var s = adjTime(today.getSeconds());
+		//var time = today.toLocaleTimeString();
+		document.getElementById("clock").innerHTML = h + ":" + m + ":" + s;
+		t = setTimeout(function(){ 
+			getTime()
+		 }, 500);
+	}
+	getTime();
+})();
+
+//end clock

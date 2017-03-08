@@ -2,3 +2,34 @@ body {
 	width: 100%;
 	height: 100%;
 }
+
+#bkgd{
+	z-index: 1;
+	background-size: cover;
+	background-position: 50% 50%;
+	background-image: url("https://source.unsplash.com/category/nature/1920x1080/daily");
+	height: 100vh;
+	width: 100vw;
+	position: absolute;
+	top: 0px;
+	right:0px;
+}
+
+#clock	{
+	z-index: 2;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    color: white;
+    font-size: 48px;
+}
+
+#weather {
+	height: 200px;
+	width: 200px;
+	z-index: 2;	
+	position: absolute;
+	top: 0;
+	left: 0;
+	border: 2px dotted white;
+}
