@@ -47,10 +47,10 @@ function getPic(){
 		var m = adjTime(today.getMinutes());
 		var s = adjTime(today.getSeconds());
 		//var time = today.toLocaleTimeString();
-		document.getElementById("clock").innerHTML = h + ":" + m + ":" + s;
+		document.getElementById("clock").innerHTML = h + ":" + m;
 		t = setTimeout(function(){ 
 			getTime()
-		 }, 500);
+		 }, 1000);
 	}
 	getTime();
 })();

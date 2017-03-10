@@ -1,10 +1,14 @@
+/* positioning is wonky using absolute and %; not exactly center..etc */
+
 body {
 	width: 100%;
 	height: 100%;
+	font-size: 24px;
+	color: white;
 }
 
 #bkgd{
-	z-index: 1;
+	z-index: -1;
 	background-size: cover;
 	background-position: 50% 50%;
 	background-image: url("https://source.unsplash.com/category/nature/1920x1080/daily");
@@ -13,25 +17,53 @@ body {
 	position: absolute;
 	top: 0px;
 	right:0px;
+	overflow: hidden;
+	
+}
+
+#bkgd:after {
+    content: '';
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    width: 110%;
+    padding-bottom: 120%;
+    box-shadow: inset 0px 0px 150px 60px rgba(0,0,0,0.6);
+    border-radius: 50%;
 }
 
 #clock	{
-	z-index: 2;
     position: absolute;
-    top: 50%;
-    right: 50%;
+    top: 40%;
+	width: 100%;
     color: white;
-    font-size: 48px;
+    font-size: 108px;
+	text-align: center;
 }
 
 #weather {
 	height: 200px;
-	width: 200px;
-	z-index: 2;	
+	width: 200px;	
 	position: absolute;
 	top: 0;
 	left: 0;
 	border: 2px dotted white;
+}
+
+#greeting {
+	width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 60%;
+	font-size: 48px;
+}
+
+#quote {
+	position: absolute;
+    width: 100%;
+    text-align: center;
+    bottom: 20px;
 }
 
 #search {
