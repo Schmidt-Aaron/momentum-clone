@@ -56,3 +56,38 @@ function getPic(){
 })();
 
 //end clock
+
+//start quotes
+(function() {
+	var quotes = [
+	{ quote: "If you think math is hard, try web design", credit: "Trish Parr" },
+	{ quote: "There are three responses to a piece of design – yes, no, and WOW! Wow is the one to aim for", credit: "Milton Glaser" },
+	{ quote: "Websites promote you 24/7. No employee will do that", credit: "Cameron Moll" },
+	{ quote: "It’s through mistakes that you actually can grow. You have to get bad in order to get good", credit: "Paul Cookson" },
+	{ quote: "If debugging is the process of removing software bugs, then programming must be the process of putting them in", credit: "Edsger Dijkstra" },
+	{ quote: "Measuring programming progress by lines of code is like measuring aircraft building progress by weight", credit: "Bill Gates" },
+	{ quote: "Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live", credit: "Martin Golding" },
+	{ quote: "Any fool can write code that a computer can understand. Good programmers write code that humans can understand", credit: "Martin Fowler" },
+	{ quote: "One of my most productive days was throwing away 1000 lines of code", credit: "Ken Thompson" },
+	{ quote: "When debugging, novices insert corrective code; experts remove defective code", credit: "Richard Pattis" },
+	{ quote: "Most good programmers do programming not because they expect to get paid or get adulation by the public, but because it is fun to program", credit: "Linus Torvalds" },
+	{ quote: "Before software can be reusable it first has to be usable", credit: "Ralph Johnson" },
+	{ quote: "Programming today is a race between software engineers striving to build bigger and better idiot-proof programs, and the Universe trying to produce bigger and better idiots. So far, the Universe is winning", credit: "Rich Cook" }
+	];
+	var random = Math.floor(Math.random() * quotes.length);
+
+
+	$.ajax({
+		cache: false,
+		url: "http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&jsonp=",
+		dataType: "json",
+		success: function(data){
+			$("#quote").html(data[0].content + "--" + data[0].title);
+		},
+		error: function(err){
+			$("#quote").html("<p>" + quotes[random].quote + "<br>" + " --" + quotes[random].credit);
+		}
+	});
+	
+})();
+//end quotes
