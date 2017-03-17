@@ -91,3 +91,71 @@ function getPic(){
 	
 })();
 //end quotes
+
+//start weather
+(function (){
+	//console.log("begin weather");
+	var lat = "";
+	var long = "";
+	var wURL = "";
+
+//location service is not great says I am three states away
+	var location = $.getJSON("http://ipinfo.io/json");
+	location.done(function(data){
+		//console.log("start loc");
+		tmp = data.loc.split(",");
+		lat = tmp[0];
+		long = tmp[1];
+		//console.log(lat + "," + long);
+		wURL ="http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + long + "&appid=5a1518c003259fdaa613a1aa78664ff9&units=imperial";
+		weather(); //fire weather 
+	});
+
+//build our weather object
+//using openweathermap.api 
+//might want to look for a different api... or obfuscate api ID
+	function weather(){
+		$.getJSON(wURL, function(data){
+			//do the things with the weather data
+			//console.log(data);
+			var temp = data.main.temp;
+			var condition = data.weather[0].main;
+			//... add more
+			//console.log(temp, condition);
+
+			//asssign to document
+			document.getElementById('temp').innerHTML = temp + "&deg;";
+			document.getElementById('cond').innerHTML = condition;
+			//console.log(condition);
+			document.getElementById('icon').innerHTML = icon(condition);
+		});
+
+		//work in progress...
+		//assign weather condition icons 
+		//OWM conditions: http://openweathermap.org/weather-conditions
+		//note that cases may not be correct
+		function icon(type) { 
+			switch(type) {
+				
+				case "partially sunny":
+				return "<i class='wi wi-day-cloudy'></i>";
+
+				case "Clouds":
+				return "<i class='wi wi-cloudy'></i>";
+
+				case "Rain":
+				return "<i class='wi wi-rain'></i>";
+
+				case "Clear":
+				return "<i class='wi wi-day-sunny'></i>";;
+
+				case "Snow":
+				return "<i class='wi wi-snow'></i>";
+
+				default:
+					return "<i class='wi wi-na'></i>";
+			}
+		}
+	}
+})(); 
+//end weather
