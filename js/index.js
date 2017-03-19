@@ -93,23 +93,25 @@ function getPic(){
 //end quotes
 
 //start weather
-(function (){
+window.onload = function (){
 	//console.log("begin weather");
 	var lat = "";
 	var long = "";
 	var wURL = "";
 
 //location service is not great says I am three states away
-	var location = $.getJSON("http://ipinfo.io/json");
-	location.done(function(data){
-		//console.log("start loc");
-		tmp = data.loc.split(",");
-		lat = tmp[0];
-		long = tmp[1];
-		//console.log(lat + "," + long);
+
+	function geoSuccess (position) {
+		console.log(position);
+
+		lat = position.coords.latitude;
+		long = position.coords.longitude;
+
 		wURL ="http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + long + "&appid=5a1518c003259fdaa613a1aa78664ff9&units=imperial";
-		weather(); //fire weather 
-	});
+		weather();
+	}
+
+	navigator.geolocation.getCurrentPosition(geoSuccess);
 
 //build our weather object
 //using openweathermap.api 
@@ -157,5 +159,5 @@ function getPic(){
 			}
 		}
 	}
-})(); 
+} 
 //end weather
