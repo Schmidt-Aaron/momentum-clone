@@ -168,9 +168,10 @@ function getPic(){
 	var db, input, ul;
 
 	databaseOpen(function(){
-		input = document.querySelector('input');
+		input = document.querySelector('#todo-input');
 		ul = document.querySelector('ul');
 		document.body.addEventListener('submit', onSubmit);
+		document.body.addEventListener('click', onClick);
 		console.log("database opened");
 		databaseTodosGet(renderAllTodos);
 	});
@@ -184,15 +185,27 @@ function getPic(){
 	}
 
 	function todoToHtml(todo) {
-		return "<li>" +todo.text+ "</li>";
+		return "<li data-index='" +todo.timeStamp+"'>" +todo.text+ "</li>";
 	}
 
 	function onSubmit(e) {
 		e.preventDefault();
 		databaseTodosAdd(input.value, function() {
-			databaseTodosGet(renderAllTodos);
 			input.value = '';
+			databaseTodosGet(renderAllTodos);
 		});
+	}
+
+	function onClick(e) {
+		//checks that the clicked element has a data-index attribute
+		if(e.target.hasAttribute('data-index')) {
+
+			//reset the index to a number because the DOM makes it a string
+			databaseTodosDelete(parseInt(e.target.dataset.index, 10), function() {
+				//refreshes the todo list
+				databaseTodosGet(renderAllTodos);
+			})
+		}
 	}
 
 	function databaseOpen(callback) {
@@ -218,11 +231,12 @@ function getPic(){
 	function databaseTodosAdd(text, callback) {
 		var transaction = db.transaction(['todo'], 'readwrite');
 		var store = transaction.objectStore('todo');
-		
-		var request = store.put({
-			text: text,
-			timeStamp: Date.now()
-		});
+		if(text){
+			var request = store.put({
+				text: text,
+				timeStamp: Date.now()
+			});
+		}
 
 		transaction.oncomplete = function(e) {
 			callback();
@@ -254,6 +268,17 @@ function getPic(){
 				callback(data);
 			}
 		} 
+		request.onerror = databaseError;
+	}
+
+	function databaseTodosDelete(index, callback) {
+		var transaction = db.transaction(['todo'], 'readwrite');
+		var store = transaction.objectStore('todo');
+		var request = store.delete(index);
+		transaction.oncomplete = function(e) {
+			callback();
+		}
+		request.onerror = databaseError;
 	}
 
 	function databaseError(e) {
