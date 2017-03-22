@@ -9,6 +9,7 @@
 
   	<title>Momentum Clone</title>
   	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/weather-icons.min.css">
 
 </head>
 
@@ -21,13 +22,21 @@
 	<div id="clock">00:00</div>
 	
 	<!-- weather widget -->
-	<div id="weather">weather</div>
+	<div id="weather">
+		<div id="temp"></div>
+		<div id="cond">
+		</div>
+		<!-- temp placeholder icon -->
+		<div id="icon">
+			<i class="wi wi-day-sunny"></i>
+		</div>
+	</div>
 
 	<!-- daily greeting -->
 	<div id="greeting">Guten tag User! </div>
 
 	<!-- daily quote -->
-	<div id="quote">#QUOTE here</div>
+	<div id="quote"></div>
 
 	<!-- todos -->
 	<div id="todos">
@@ -56,6 +65,8 @@
 
 	<a class='g-signout' href="#" onclick="signOut();">Sign out</a>
 	<!-- end authentication code -->
+	<script src="js/jquery-3.2.0.min.js"></script>
+
 
 	<script src='js/indexeddb.shim.min.js'></script>
 	<script src='js/index.js'></script>
