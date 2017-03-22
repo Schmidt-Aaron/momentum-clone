@@ -268,7 +268,7 @@ function getPic(){
 				callback(data);
 			}
 		} 
-		request.onerror = databaseError;
+		cursorRequest.onerror = databaseError;
 	}
 
 	function databaseTodosDelete(index, callback) {
