@@ -56,3 +56,104 @@ function getPic(){
 })();
 
 //end clock
+
+//start todo module
+
+(function() {
+	//global variable for database
+	var db, input, ul;
+
+	databaseOpen(function(){
+		input = document.querySelector('input');
+		ul = document.querySelector('ul');
+		document.body.addEventListener('submit', onSubmit);
+		console.log("database opened");
+		databaseTodosGet(renderAllTodos);
+	});
+
+	function renderAllTodos(todos) {
+		var html = '';
+		todos.forEach(function(todo) {
+			html += todoToHtml(todo);
+		});
+		ul.innerHTML = html;
+	}
+
+	function todoToHtml(todo) {
+		return "<li>" +todo.text+ "</li>";
+	}
+
+	function onSubmit(e) {
+		e.preventDefault();
+		databaseTodosAdd(input.value, function() {
+			databaseTodosGet(renderAllTodos);
+			input.value = '';
+		});
+	}
+
+	function databaseOpen(callback) {
+		//open database and assign name and version
+		var version = 1;
+		//using the users name as part of the database name
+		var request = indexedDB.open('todos', version);
+
+		request.onupgradeneeded = function(e) {
+			db = e.target.result;
+			e.target.transaction.onerror = databaseError;
+			db.createObjectStore('todo', {keyPath: 'timeStamp'});
+		};
+
+		request.onsuccess = function(e) {
+			db = e.target.result;
+			callback();
+		};
+
+		request.onerror = databaseError;
+	}
+
+	function databaseTodosAdd(text, callback) {
+		var transaction = db.transaction(['todo'], 'readwrite');
+		var store = transaction.objectStore('todo');
+		
+		var request = store.put({
+			text: text,
+			timeStamp: Date.now()
+		});
+
+		transaction.oncomplete = function(e) {
+			callback();
+		};
+
+		request.onerror = databaseError;
+	}
+
+	function databaseTodosGet(callback) {
+		var transaction = db.transaction(['todo'], 'readonly');
+		var store = transaction.objectStore('todo');
+
+		//get everything in the datastore
+		var keyRange = IDBKeyRange.lowerBound(0);
+		var cursorRequest = store.openCursor(keyRange);
+
+		//onsuccess is fired once for every item collecting data in a array to pass at once
+		var data = [];
+		cursorRequest.onsuccess = function(e) {
+			var result = e.target.result;
+
+			//if there is data push to array
+			if(result) {
+				data.push(result.value);
+				result.continue();
+
+				//reach the end of  data
+			} else {
+				callback(data);
+			}
+		} 
+	}
+
+	function databaseError(e) {
+		console.log('an IndexedDB error occurred ',  e)
+	}
+}());
+//end todo
