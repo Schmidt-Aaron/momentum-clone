@@ -111,7 +111,9 @@ window.onload = function (){
 		weather();
 	}
 
-	navigator.geolocation.getCurrentPosition(geoSuccess);
+	navigator.geolocation.getCurrentPosition(geoSuccess, function(){
+		console.error("Please provide your location");
+	});
 
 //build our weather object
 //using openweathermap.api 
